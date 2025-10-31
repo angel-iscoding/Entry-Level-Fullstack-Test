@@ -12,7 +12,7 @@ const generateToken = () => {
 
   // Sign token with expiration (e.g., 1 hour)
   const token = jwt.sign(payload, secret, { expiresIn: '1h' });
-  
+
   return token;
 };
 

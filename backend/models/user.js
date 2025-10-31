@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  
+
   User.init({
     id: {
       type: DataTypes.INTEGER,
@@ -34,6 +34,6 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'users',
     timestamps: true
   });
-  
+
   return User;
 };
