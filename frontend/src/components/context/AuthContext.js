@@ -15,25 +15,24 @@ export const AuthProvider = ({ children }) => {
 
     const URL = "http://localhost:3001/api";
 
-    const register = async ( userData ) => {
+    const register = async ( email, password ) => {
         try {
             const res = await fetch(`${URL}/auth/register`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify( userData ),
+              body: JSON.stringify({ email, password }),
             });
 
             const data = await res.json();
 
-            if (!res.ok)
-              throw new Error(data.error || "Error al hacer la solicitud");
+            if (!res.ok) throw new Error(data.error || "Error al registrarse");
 
             return true;
         } catch (error) {
             console.error(error);
             throw error;
         }
-    }
+    };
 
     const login = async ( email, password ) => {
         try {
