@@ -1,20 +1,26 @@
-import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Container, Box, TextField, Button, Typography, Paper } from '@mui/material';
+import { useAuth } from './context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../routes';
 
-function Login({ onLogin }) {
+function Login() {
   const { control, handleSubmit, formState: { errors }, setError } = useForm();
 
-  const onSubmit = (data) => {
-    // Check if both email and password are correct
-    if (data.email === 'admin@example.com' && data.password === 'admin') {
-      // Login successful
-      onLogin({ firstName: 'Admin' });
-    } else {
-      // Login failed
-      setError('password', {
-        type: 'manual',
-        message: 'Credenciales inválidas',
+  const { login } = useAuth();
+  const navigate = useNavigate(); 
+
+  const onSubmit = async (data) => {
+    try {
+      await login(data.email, data.password);
+
+      navigate(ROUTES.PROFILE);
+    } catch (error) {
+      console.log(error);
+      
+      setError("password", {
+        type: "manual",
+        message: "Credenciales inválidas",
       });
     }
   };
