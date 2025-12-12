@@ -86,6 +86,39 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const update = async (name, lastName, email, phone, password) => {
+      try {
+        const currentIp = await ip();
+        const agent = navigator.userAgent;
+
+        const res = await fetch(`${URL}/users/update/${user.id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+          },
+          body: JSON.stringify({
+            name,
+            lastName,
+            email,
+            phone,
+            password,
+            currentIp: currentIp.ip,
+            curentAgent: agent,
+          }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || "Error al registrarse");
+
+        return true;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    };
+
     const logout = () => {
         setUser(null);
         setIsAuthenticated(false);

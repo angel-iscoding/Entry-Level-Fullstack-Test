@@ -40,3 +40,20 @@ export const create = async (userData) => {
     }
   };
 };
+
+export const update = async (userId, updates) => {
+  const updatedUser = await User.update(updates, {
+    where: { id: userId }
+  });
+
+  return {
+    message: 'Usuario actualizado',
+    data: {
+      id: updatedUser.id,
+      name: updatedUser.name,
+      lastName: updatedUser.lastName,
+      email: updatedUser.email,
+      phone: updatedUser.phone
+    }
+  };
+};
