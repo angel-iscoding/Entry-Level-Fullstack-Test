@@ -7,13 +7,33 @@ export async function up(queryInterface, Sequelize) {
       autoIncrement: true,
       allowNull: false
     },
+    name: {
+      type: Sequelize.TEXT,
+      allowNull: false
+    },
+    lastName: {
+      type: Sequelize.TEXT,
+      allowNull: false
+    },
     email: {
+      type: Sequelize.TEXT,
+      allowNull: false
+    },
+    phone: {
       type: Sequelize.TEXT,
       allowNull: false
     },
     password: {
       type: Sequelize.TEXT,
       allowNull: false
+    },
+    currentIp: {
+      type: Sequelize.TEXT,
+      allowNull: true
+    },
+    currentAgent: {
+      type: Sequelize.TEXT,
+      allowNull: true
     },
     active: {
       type: Sequelize.BOOLEAN,

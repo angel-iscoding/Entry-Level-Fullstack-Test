@@ -1,8 +1,28 @@
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import db from '../models/index.js';
 
-export const generateToken = () => {
+const { User } = db;
+
+export function verifyToken(req, res, next) {
+  const header = req.header('Authorization') || '';
+  const token = header.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ message: 'Token not provied' });
+  }
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    req.username = payload.username;
+    next();
+  } catch (error) {
+    return res.status(403).json({ message: 'Token not valid' });
+  }
+}
+
+export const generateToken = (user) => {
   const payload = {
-    userId: -1
+    userId: user.id,
+    userEmail: user.email
   };
 
   const secret = process.env.JWT_SECRET;
@@ -14,4 +34,34 @@ export const generateToken = () => {
   const token = jwt.sign(payload, secret, { expiresIn: '1h' });
 
   return token;
+};
+
+export const loginUser = async (userLogin) => {
+  const userFound = await User.findOne({ where: { email: userLogin.email } });
+
+  if (!userFound) {
+    throw new Error('El usuario no existe');
+  }
+
+  console.log(bcrypt.hash(userLogin.password, userFound.password));
+
+  const isMatch = await bcrypt.compare(userLogin.password, userFound.password);
+
+  if (!isMatch) {
+    throw new Error('Las contraseñas no coinciden');
+  }
+
+  const userToken = generateToken(userFound);
+
+  return {
+    message: 'Login exitoso!',
+    token: userToken,
+    data: {
+      id: userFound.id,
+      name: userFound.name,
+      lastName: userFound.lastName,
+      email: userFound.email,
+      phone: userFound.phone
+    }
+  };
 };
