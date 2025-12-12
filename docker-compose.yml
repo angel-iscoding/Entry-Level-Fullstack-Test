@@ -1,0 +1,39 @@
+services:
+  db:
+    image: "postgres:15"
+    container_name: postgres_db
+    ports: 
+      - 5432:5432
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password123*
+      POSTGRES_DB: mydatabase
+    volumes:
+      - pg_data:/var/lib/postgresql/data 
+  backend:
+    build: ./backend
+    ports: 
+      - 3001:3001
+    environment:
+      DB_HOST: db
+      DB_USER: user
+      DB_PASSWORD: password123*
+      DB_NAME: mydatabase
+      DB_PORT: 5432
+      PORT: 3001
+    depends_on:
+      - db
+    volumes: 
+      - ./backend:/app
+      - /app/node_modules
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on: 
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+volumes:
+  pg_data:
