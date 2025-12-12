@@ -20,6 +20,7 @@ services:
       DB_PASSWORD: password123*
       DB_NAME: mydatabase
       DB_PORT: 5432
+      JWT_SECRET: supersecreto
       PORT: 3001
     depends_on:
       - db
