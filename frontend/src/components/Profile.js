@@ -6,6 +6,9 @@ function Profile()  {
 
   const { user, logout } = useAuth();
 
+  console.log(user);
+  
+
   return (
     <Container maxWidth="sm">
       <Box
@@ -17,7 +20,7 @@ function Profile()  {
         }}
       >
         <Typography component="h1" variant="h3" gutterBottom>
-          Hola {user.email}
+          Hola {user.name} {user.lastName}
         </Typography>
         <Button
           variant="contained"

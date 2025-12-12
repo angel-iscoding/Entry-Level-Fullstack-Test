@@ -43,7 +43,10 @@ export const loginUser = async (userLogin) => {
     token: userToken,
     data: {
       id: userFound.id,
-      email: userFound.email
+      name: userFound.name,
+      lastName: userFound.lastName,
+      email: userFound.email,
+      phone: userFound.phone
     }
   };
 };

@@ -6,9 +6,25 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const {
+      name,
+      lastName,
+      email,
+      phone,
+      password,
+      currentIp,
+      curentAgent
+    } = req.body;
 
-    const response = await userService.create({ email, password });
+    const response = await userService.create({
+      name,
+      lastName,
+      email,
+      phone,
+      password,
+      currentIp,
+      curentAgent
+    });
 
     res.status(201).json(response);
   } catch (error) {
