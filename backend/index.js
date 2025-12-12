@@ -19,8 +19,8 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-app.use('/users', usersController);
-app.use('/auth', authController);
+app.use('/api/users', usersController);
+app.use('/api/auth', authController);
 
 sequelize.authenticate()
   .then(() => {

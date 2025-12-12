@@ -1,4 +1,5 @@
 import { useForm, Controller } from "react-hook-form";
+import { Link } from "react-router-dom";
 import {
   Container,
   Box,
@@ -6,11 +7,11 @@ import {
   Button,
   Typography,
   Paper,
-  Fab,
 } from "@mui/material";
 import { useAuth } from "./context/AuthContext";
 import { useState } from "react";
 import Alert from "@mui/material/Alert";
+import { ROUTES } from "../routes";
 
 function Register() {
   const {
@@ -25,7 +26,13 @@ function Register() {
 
   const onSubmit = async (data) => {
     try {
-      await register(data.email, data.password);
+      await register(
+        data.name, 
+        data.lastName,
+        data.email,
+        data.phone,
+        data.password
+      );
       setAlertMessage("Usuario registrado con exito!")
     } catch (error) {
       console.log(error);
@@ -47,6 +54,7 @@ function Register() {
           alignItems: "center",
         }}
       >
+        <p><Link to={ROUTES.HOME}>Volver</Link></p>
         <Paper elevation={3} sx={{ padding: 4, width: "100%" }}>
           <Typography component="h1" variant="h5" align="center" gutterBottom>
             Registrarse
@@ -78,7 +86,7 @@ function Register() {
               )}
             />
             <Controller
-              name="last_name"
+              name="lastName"
               control={control}
               defaultValue=""
               rules={{
@@ -93,8 +101,8 @@ function Register() {
                   type="text"
                   autoComplete="text"
                   autoFocus
-                  error={!!errors.last_name}
-                  helperText={errors.last_name?.message}
+                  error={!!errors.lastName}
+                  helperText={errors.lastName?.message}
                 />
               )}
             />
@@ -179,7 +187,7 @@ function Register() {
           </Box>
         </Paper>
       </Box>
-      {alertMessage && <Alert severity="success">{alertMessage}</Alert>}
+      {alertMessage && <Alert severity="success">{alertMessage} <Link to={ROUTES.HOME}>Volver a la pagina de registro.</Link></Alert>}
     </Container>
   );
 }

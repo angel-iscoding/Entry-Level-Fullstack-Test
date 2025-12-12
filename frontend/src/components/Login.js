@@ -1,7 +1,7 @@
 import { useForm, Controller } from 'react-hook-form';
 import { Container, Box, TextField, Button, Typography, Paper } from '@mui/material';
 import { useAuth } from './context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { ROUTES } from '../routes';
 
 function Login() {
@@ -30,25 +30,29 @@ function Login() {
       <Box
         sx={{
           marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        <Paper elevation={3} sx={{ padding: 4, width: '100%' }}>
+        <Paper elevation={3} sx={{ padding: 4, width: "100%" }}>
           <Typography component="h1" variant="h5" align="center" gutterBottom>
             Iniciar sesión
           </Typography>
-          <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            sx={{ mt: 1 }}
+          >
             <Controller
               name="email"
               control={control}
               defaultValue=""
               rules={{
-                required: 'El correo electrónico es requerido',
+                required: "El correo electrónico es requerido",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Dirección de correo electrónico inválida',
+                  message: "Dirección de correo electrónico inválida",
                 },
               }}
               render={({ field }) => (
@@ -70,7 +74,7 @@ function Login() {
               control={control}
               defaultValue=""
               rules={{
-                required: 'La contraseña es requerida',
+                required: "La contraseña es requerida",
               }}
               render={({ field }) => (
                 <TextField
@@ -96,6 +100,7 @@ function Login() {
           </Box>
         </Paper>
       </Box>
+      <p>¿No tienes cuenta? <Link to={ROUTES.REGISTER}>Registrate aquí</Link></p>
     </Container>
   );
 }
