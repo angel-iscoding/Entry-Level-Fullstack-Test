@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import cors from 'cors';
 import { sequelize } from './models/index.js';
 import usersController from './controllers/users.controller.js';
 import authController from './controllers/auth.controller.js';
@@ -8,6 +9,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the backend API!' });
